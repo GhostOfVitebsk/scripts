@@ -1,3 +1,4 @@
+  GNU nano 6.2                                                                           runner.sh                                                                                     
 #!/bin/bash
 
 process_files() {
@@ -6,20 +7,15 @@ process_files() {
         if [ -d "$file" ]; then
             process_files "$file"
         elif [ -f "$file" ]; then
-            echo "Processing file: $file"
-            if [[ $(file --mime-type -b "$file") == application/octet-stream ]]; then
-                echo "$file is a binary file"
-            else
-                echo "$file is not a binary file"
+            file_type=$(file "$file")
+            if [[ $file_type == *ELF* ]]; then
+                echo "Processing $file"
+                binary-security-check -c never "$file"
             fi
         fi
     done
 }
 
-if [ -z "$1" ]; then
-    echo "Usage: $0 <путь до верхней папки>"
-    exit 1
-fi
-
 process_files "$1"
+
 
