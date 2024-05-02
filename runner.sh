@@ -1,4 +1,3 @@
-  GNU nano 6.2                                                                           runner.sh                                                                                     
 #!/bin/bash
 
 process_files() {
